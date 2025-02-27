@@ -1,9 +1,22 @@
-﻿namespace OrleansHelloWorld.Silo;
+﻿using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+
+namespace OrleansHelloWorld.Silo;
 
 class Program
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        var builder = Host.CreateDefaultBuilder(args)
+            .UseOrleans(silo =>
+            {
+                silo.UseLocalhostClustering()
+                    .ConfigureLogging(logging => logging.AddConsole());
+            })
+            .UseConsoleLifetime();
+
+        using var host = builder.Build();
+
+        await host.RunAsync();
     }
 }

@@ -1,9 +1,35 @@
-﻿namespace OrleansHelloWorld.Client;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using OrleansHelloWorld.GrainInterfaces;
+
+namespace OrleansHelloWorld.Client;
 
 class Program
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        var builder = Host.CreateDefaultBuilder(args)
+            .UseOrleansClient(client => { client.UseLocalhostClustering(); })
+            .ConfigureLogging(logging => logging.AddConsole())
+            .UseConsoleLifetime();
+
+        using var host = builder.Build();
+        await host.StartAsync();
+
+        var client = host.Services.GetRequiredService<IClusterClient>();
+
+        var friend = client.GetGrain<IHello>(0);
+        var response = await friend.SayHello("Hi friend!");
+
+        Console.WriteLine($"""
+                           {response}
+
+                           Press any key to exit...
+                           """);
+
+        Console.ReadKey();
+
+        await host.StopAsync();
     }
 }
