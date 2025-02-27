@@ -1,6 +1,8 @@
 ﻿namespace OrleansHelloWorld.GrainInterfaces;
 
-public interface IHello: IGrainWithIntegerKey
+using Orleans;
+
+public interface IHello : IGrainWithIntegerKey
 {
-    ValueTask<string> SayHello(string greeting);    
+    ValueTask<string> SayHello(string greeting);
 }
