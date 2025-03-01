@@ -1,5 +1,5 @@
-﻿<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="NET 9 HelloGrain" type="com.intellij.execution.configurations.multilaunch" factoryName="MultiLaunchConfiguration">
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name=".NET 9 HelloGrain" type="com.intellij.execution.configurations.multilaunch" factoryName="MultiLaunchConfiguration">
     <rows>
       <ExecutableRowSnapshot>
         <option name="condition">
